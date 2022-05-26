@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기능:게임시간</title>
+</head>
+
+<body>
+    <script>
+        //게임시간을 다른기능에서 사용하기 위한 전역변수
+        //게임 일
+        var game_day = 0;
+        //게임 시
+        var game_hour = 0;
+        //게임 분
+        var game_min = 0;
+        //1초에 2분씩 증가하는 게임 분
+        var game_min_slow = 0;
+
+        //기능: 게임시간
+        function make_gametime() {
+            //0.5초당 1분증가
+            game_min = game_min + 1
+            //60분이 되었을때 1시간 증가
+            if (game_min == 60) {
+                game_min = 0;
+                game_hour = game_hour + 1;
+            }
+            //24시간이 되었을때 1일 증가
+            if (game_hour == 24) {
+                game_hour = 0;
+                game_day = game_day + 1;
+            }
+            //게임시간 2분마다 업데이트 처리
+            if (game_min % 2 == 0) {
+                game_min_slow = game_min
+            }
+
+            //테스트용 출력코드 삭제요망
+            var test1 = document.getElementById("gametime_now");
+            test1.innerText = game_day + " 일 " + game_hour + " 시 " + game_min + " 분";
+            var test2 = document.getElementById("gametime_now_slow");
+            test2.innerText = game_day + " 일 " + game_hour + " 시 " + game_min_slow + " 분";
+            //테스트용 출력코드 삭제요망
+        }
+        //0.5초마다 시간함수 실행
+        setInterval(make_gametime, 500);
+    </script>
+    <!--테스트용 삭제 필요-->
+    <p>현재 게임시간을 나타냅니다.</p>
+    <div id="gametime_now"></div>
+    <p>2분마다 보이는 현재 게임시간</p>
+    <div id="gametime_now_slow"></div>
+    <!--테스트용 삭제 필요-->
+</body>
+
+</html>
