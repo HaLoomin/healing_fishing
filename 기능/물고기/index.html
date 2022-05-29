@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물고기</title>
+</head>
+<body>
+    <script>
+        var cath = true;
+
+        // 물고기 배열
+        var fish = [
+            { name: "곱사연어", size: "중", grade: "a" },
+            { name: "볼락", size: "소", grade: "b" },
+            { name: "연어", size: "중", grade: "c" },
+            { name: "명태", size: "중", grade: "e" },
+            { name: "고등어", size: "소", grade: "f" },
+            { name: "대구", size: "중", grade: "d" },
+            { name: "참다랑어", size: "대", grade: "b" },
+            { name: "도미", size: "소", grade: "c" },
+            { name: "농어", size: "중", grade: "d" },
+            { name: "꼬치고기", size: "소", grade: "e" },
+            { name: "가자미", size: "대", grade: "f" }
+        ];
+
+
+        function fishing() {
+            // 물고기 갯수만큼 랜덤
+            var number = Math.floor(Math.random() * fish.length);
+
+            document.write('<img src="images/' + fish[number].name + '.jpg"', "<br>");
+            document.write("이름 : " + fish[number].name, "<br>");
+            document.write("크기 : " + fish[number].size, "<br>");
+            document.write("등급 : " + fish[number].grade, "<br>");
+        }
+
+        if (cath) {
+            fishing();
+        } else {
+            document.write("물고기를 놓쳤어요!");
+        }
+    </script>
+</body>
+
+</html>
