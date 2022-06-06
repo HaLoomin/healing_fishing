@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도감</title>
+</head>
+<!-- 특정 물고기를 처음 잡게되면 도감에 추가, 특정 물고기를 잡으면 값이 1 잡음으로 표시 -->
+
+<body>
+    <script>
+        var cath = true;
+
+        // 물고기 배열
+        var fish = ["곱사연어", "볼락", "연어", "명태", "고등어",
+            "대구", "참다랑어", "도미", "농어", "꼬치고기", "가자미"];
+
+        var grade = ["a", "b", "c", "d", "e"];
+
+        var book = [];
+
+        function fishing() {
+            // 물고기 갯수만큼 랜덤
+            var number = Math.floor(Math.random() * fish.length);
+
+            document.write('<img src="images/' + fish[number] + '.jpg"', "<br>");
+            document.write("grade: " + grade[number % 5], "<br>");
+
+            if (book.indexOf(fish[number] < 0)) {
+                book.push(fish[number]);
+            } else {
+                document.write("+1");
+            }
+        }
+
+        if (cath) {
+            fishing();
+        } else {
+            document.write("물고기를 놓쳤어요!");
+        }
+    </script>
+</body>
+
+</html>
