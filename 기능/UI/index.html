@@ -11,17 +11,34 @@
 <style>
     .flex--container {
         display: inline-flex;
-        flex-flow: row wrap;
+        flex-direction: column;
         height: 700px;
         width: 90px;
         padding: 10px;
         border: 1px solid;
         border-radius: 10px;
+        background-color: gray;
     }
 
-    .flex--container.space-evenly {
-        align-content: space-evenly;
+    .flex-item {
+        height: 30px;
+        width: 90px;
+        text-align: center;
+        position: relative;
+        margin-top: 20px;
+        top: 50px
     }
+
+
+    .flex--item {
+        height: 30px;
+        width: 90px;
+        text-align: center;
+        position: relative;
+        margin-top: 20px;
+        top: 360px;
+    }
+
 
     .flex-container {
         display: flex;
@@ -29,6 +46,19 @@
         border: 1px solid;
         border-radius: 10px;
         width: 980px;
+        background-color: gray
+    }
+
+    .flex---item {
+        text-align: center;
+        position: relative;
+        left: 40px
+    }
+
+    .flex----item {
+        text-align: center;
+        position: relative;
+        left: 820px
     }
 
     .flex-container.space-between {
@@ -37,27 +67,48 @@
 </style>
 
 <body>
-    
-    <div class="flex--container space-evenly" style="float: left; margin-right: 10px;">
-        <button>장비</button>
-        <button>잡은 물고기</button>
-        <button>점수</button>
-        <button>게임방법</button>
-        <button>설정</button>
+
+    <div class="flex--container" style="float: left; margin-right: 10px;">
+        <button class="flex-item">
+            <ion-icon name="hammer"></ion-icon>
+            장비
+        </button>
+        <button class="flex-item">
+            <ion-icon name="fish"></ion-icon>
+            양동이
+        </button>
+        <button class="flex-item">
+            <ion-icon name="list" ></ion-icon>
+            점수
+        </button>
+        <button class="flex--item">
+            <ion-icon name="help-circle"></ion-icon>
+            게임방법
+        </button>
+        <button class="flex--item">
+            <ion-icon name="settings"></ion-icon>
+            설정
+        </button>
     </div>
 
-    <div class="flex-container space-between" style="float: left; margin-bottom: 13px;">
-        <div>물고기</div>
-        <div>확률</div>
-        <div>시간</div>
+    <div class="flex-container" style="float: left; margin-bottom: 13px;">
+        <button>score: </button>
+        <button class="flex---item">확률:</button>
+        <button class="flex----item">시간</button>
     </div>
 
     <canvas id="myCanvas" width="1000" height="600" style="border: 1px solid;" style="float: left;"></canvas>
 
     <div class="flex-container space-between" style="float: left; margin-top: 13px;">
-        <button>게임 시작 / 중지</button>
+        <button>
+            <ion-icon name="boat"></ion-icon>
+            낚시 시작 / 중지
+        </button>
         <div>로고</div>
     </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
