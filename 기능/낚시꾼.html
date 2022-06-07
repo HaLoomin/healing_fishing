@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>낚시할 때 이미지 변화</title>
+</head>
+<body>
+    <img src="./image.png" id=mainImage alt="slide"/>
+
+<script>
+    var x;      //변수 선언, 아래 조건문으로 변수값에 대해 애니메이션 진행 (코드 합칠 때 재구성 필요)
+    if (x=1) {
+        var myImage = document.getElementById("mainImage"); //이미지 선언, mainImage로부터 받아오기 (10번째 줄에 주소 src)
+        var imageArray = [ "./image/f0.png", //f -> fishing(낚시할 때) image파일 속 f_(_는 숫자)의 사진
+        "./image/f1.png", "./image/f2.png", "./image/f3.png" ];     //배열 선언, 애니메이션에 활용할 이미지들을 배열에 넣어줌
+        var imageIndex = 0; //인덱스 선언
+
+	    function changeImage() {        //임의의 함수명 changeImage라 설정
+		myImage.setAttribute("src", imageArray[imageIndex]);    //배열에서 불러오기
+		imageIndex++;       //인덱스 숫자 증가 -> 차례로 나타내기
+		if (imageIndex >= imageArray.length) {      //이미지 인덱스가 배열 크기보다 커지면 인덱스를 0으로 초기화한다 -> 애니메이션 반복
+			imageIndex = 0; 
+		    }
+	    }
+        setInterval(changeImage, 200);     //0.2초마다 시간함수 발생
+    }
+    else if (x=2) {
+        var myImage = document.getElementById("mainImage");
+        var imageArray = [ "./image/u0.png", //u -> up(낚아올릴 때)
+        "./image/u1.png", "./image/u2.png", "./image/u3.png" ];
+        var imageIndex = 0;
+
+        function changeImage() {
+		myImage.setAttribute("src", imageArray[imageIndex]);
+		imageIndex++;
+		if (imageIndex >= imageArray.length) {
+			imageIndex = 0;
+		}
+	}
+	    setInterval(changeImage, 300)      //0.3초마다 시간함수 발생
+    }
+    else if (x=3) {
+        var myImage = document.getElementById("mainImage");
+        var imageArray = [ "./image/h0.png", //h -> happy(낚았을 때)
+        "./image/h1.png", "./image/h2.png", "./image/h3.png" ];
+        var imageIndex = 0;
+
+	    function changeImage() {
+		myImage.setAttribute("src", imageArray[imageIndex]);
+		imageIndex++;
+		if (imageIndex >= imageArray.length) {
+			imageIndex = 0;
+            }
+        }
+	    setInterval(changeImage, 100);      //0.1초마다 시간함수 발생
+    }
+    else {var myImage = document.getElementById("mainImage");
+        var imageArray = [ "./image/a0.png", //a ->angry(놓쳤을 때)
+        "./image/a1.png", "./image/a2.png", "./image/a3.png" ];
+        var imageIndex = 0;
+
+        function changeImage() {
+		myImage.setAttribute("src", imageArray[imageIndex]);
+		imageIndex++;
+		if (imageIndex >= imageArray.length) {
+			imageIndex = 0;
+            }
+        }
+	    setInterval(changeImage, 200);      //0.2초마다 시간함수 발생
+    }
+</script>
+</body>
+</html> 
