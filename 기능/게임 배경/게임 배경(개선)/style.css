@@ -1,0 +1,182 @@
+@keyframes rotate {
+    0% {
+        transform: perspective(400px) rotateZ(10deg) rotateX(-40deg) rotateY(0);
+    }
+    100% {
+        transform: perspective(400px) rotateZ(10deg) rotateX(-40deg) rotateY(-360deg);
+    }
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes sun {
+    0% {
+        opacity: 0;
+        transform: rotate(-90deg);
+    }
+    25% {
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+    50% {
+        opacity: 0;
+        transform: rotate(90deg);
+    }
+    75% {
+        opacity: 0;
+        transform: rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(270deg);
+    }
+}
+@keyframes day {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes flow {
+    0% {
+        left: 0%;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        left: 90%;
+        opacity: 0;
+    }
+}
+* {
+    margin: 0;
+    padding: 0;
+    color: #000;
+}
+body {
+    width: 100%;
+    height: 100vh;  
+    overflow: hidden;
+}
+section {
+    position: relative;
+    width: 1000px;
+    height: 600px;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);  
+}
+canvas {
+    width: 1000px;
+    height: 600px;
+}
+section .sky {                  
+    position: absolute;
+    width: 1000px;
+    height: 600px;
+}
+section .sky .sun {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    margin-left: -100px;
+    transform-origin: center 500px;
+    animation-name: sun;
+    animation-timing-function: linear;
+    animation-duration: 720s;
+    animation-iteration-count: infinite;
+}
+section .sky .moon {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    margin-left: -100px;
+    transform-origin: center 500px;
+    animation-name: sun;
+    animation-timing-function: linear;
+    animation-duration: 720s;
+    animation-iteration-count: infinite;
+    animation-delay: 360s;
+    opacity: 0;
+}
+section .sky .cloud1 {
+    position: absolute;
+    top: 70px;
+    left: 10%;
+    transform: scale(60%);
+    animation-name: flow;
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+section .sky .cloud2 {
+    position: absolute;
+    top: 100px;
+    left: 0%;
+    transform: scale(60%);
+    animation-name: flow;
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+.stars {
+    opacity: 0;
+    transform: perspective(500px);
+    transform-style: preserve-3d;
+    position: absolute;
+    bottom: 0;
+    perspective-origin: 50% 100%;
+    left: 50%;
+    animation-name: rotate;
+    animation-duration: 90s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+.star {
+    width: 2px;
+    height: 2px;
+    background: #F7F7B6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 2px;
+    transform-origin: 0 0 -300px;
+    transform: translate3d(0, 0, -300px);
+    backface-visibility: hidden;
+}
+#gametime_now_slow {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 30px;
+    background-color: #fff;
+    border: 1px solid black;
+    z-index: 999;
+}
