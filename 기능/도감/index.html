@@ -10,6 +10,14 @@
 <!-- 특정 물고기를 처음 잡게되면 도감에 추가, 특정 물고기를 잡으면 값이 1 잡음으로 표시 -->
 
 <body>
+    <table id="Table" border="1">
+        <tr><th colspan="5">도감</th></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
     <script>
         var cath = true;
 
@@ -25,18 +33,25 @@
             // 물고기 갯수만큼 랜덤
             var number = Math.floor(Math.random() * fish.length);
 
-            document.write('<img src="images/' + fish[number] + '.jpg"', "<br>");
-            document.write("grade: " + grade[number % 5], "<br>");
-
-            if (book.indexOf(fish[number] < 0)) {
+            if (book.indexOf(fish[number]) < 0) {
                 book.push(fish[number]);
             } else {
                 document.write("+1");
             }
         }
 
+        function addFish(c, r, num){
+            var row = document.getElementById("Table").rows[r];
+            var cell = row.cells[c];
+
+            var img = document.createElement('img');
+            img.src = 'images/' + book + '.jpg';
+            cell.append(img);
+        }
+
         if (cath) {
             fishing();
+            addFish(0,1,1)
         } else {
             document.write("물고기를 놓쳤어요!");
         }
