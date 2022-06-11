@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- 코드 정리 방법에 관해서는 코드 정리 "ReadMe.txt" 파일에 정리해놓았습니다. -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team5_힐링낚시게임</title>
+    <style>
+        /* UI CSS : 서지우 */
+        @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+        body{
+            font-family: 'Jua', sans-serif;
+            background-color: #fffde76b;
+        }
+        input{
+            font-family: 'Jua', sans-serif;
+        }
+        /*UI관련 css*/
+        .flex--container {
+            display: inline-flex;
+            flex-direction: column;
+            height: 700px;
+            width: 90px;
+            padding: 10px;
+            border: 1px solid;
+            border-radius: 10px;
+            background-color: gray;
+        }
+
+        .flex-item {
+            height: 30px;
+            width: 90px;
+            text-align: center;
+            position: relative;
+            margin-top: 20px;
+            top: 50px
+        }
+
+
+        .flex--item {
+            height: 30px;
+            width: 90px;
+            text-align: center;
+            position: relative;
+            margin-top: 20px;
+            top: 360px;
+        }
+
+
+        .flex-container {
+            display: flex;
+            padding: 10px;
+            border: 3px solid;
+            border-radius: 10px;
+            width: 980px;
+            background-color: rgb(182, 182, 182)
+        }
+
+        .flex---item {
+            text-align: center;
+            position: relative;
+            left: 40px
+        }
+
+        .flex----item {
+            text-align: center;
+            position: relative;
+            left: 770px
+        }
+
+        .flex-container.space-between {
+            justify-content: space-between;
+        }
+
+        /*게임배경 관련 css : 조현서*/
+        @keyframes rotate {
+            0% {
+                transform: perspective(400px) rotateZ(10deg) rotateX(-40deg) rotateY(0);
+            }
+
+            100% {
+                transform: perspective(400px) rotateZ(10deg) rotateX(-40deg) rotateY(-360deg);
+            }
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes sun {
+            0% {
+                opacity: 0;
+                transform: rotate(-90deg);
+            }
+
+            25% {
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+
+            50% {
+                opacity: 0;
+                transform: rotate(90deg);
+            }
+
+            75% {
+                opacity: 0;
+                transform: rotate(180deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: rotate(270deg);
+            }
+        }
+
+        @keyframes day {
+            0% {
+                opacity: 0;
+            }
+
+            25% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            75% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes flow {
+            0% {
+                left: 0%;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 90%;
+                opacity: 0;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        section {
+            position: relative;
+            width: 1000px;
+            height: 600px;
+        }
+
+        canvas {
+            width: 1000px;
+            height: 600px;
+        }
+
+        section .sky {
+            position: absolute;
+            width: 1000px;
+            height: 600px;
+        }
+
+        section .sky .sun {
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            margin-left: -100px;
+            transform-origin: center 500px;
+            animation-name: sun;
+            animation-timing-function: linear;
+            animation-duration: 720s;
+            animation-iteration-count: infinite;
+        }
+
+        section .sky .moon {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            margin-left: -100px;
+            transform-origin: center 500px;
+            animation-name: sun;
+            animation-timing-function: linear;
+            animation-duration: 720s;
+            animation-iteration-count: infinite;
+            animation-delay: 360s;
+            opacity: 0;
+        }
+
+        section .sky .cloud1 {
+            position: absolute;
+            top: 150px;
+            left: 10%;
+            transform: scale(60%);
+            animation-name: flow;
+            animation-duration: 20s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        section .sky .cloud2 {
+            position: absolute;
+            top: 130px;
+            left: 0%;
+            transform: scale(60%);
+            animation-name: flow;
+            animation-duration: 20s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .stars {
+            opacity: 0;
+            transform: perspective(500px);
+            transform-style: preserve-3d;
+            position: absolute;
+            bottom: 0;
+            perspective-origin: 50% 100%;
+            left: 50%;
+            animation-name: rotate;
+            animation-duration: 90s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .star {
+            width: 2px;
+            height: 2px;
+            background: #F7F7B6;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 2px;
+            transform-origin: 0 0 -300px;
+            transform: translate3d(0, 0, -300px);
+            backface-visibility: hidden;
+        }
+        /* 기능별 CSS */
+        #gametime_now_slow {
+            position: absolute;
+            right: 10px;
+            width: 200px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 30px;
+            background-color: #fff;
+            border: 3px solid black;
+            z-index: 999;
+        }
+        #fishcatch_start_button{
+            width: 200px;
+            height: 50px;
+            margin-left: 30px;
+            border: 3px solid black;
+            border-radius: 30px;
+            background-color: rgb(35, 148, 1);
+            color: white;
+            font-size: 15pt;
+        }
+        #fishcatch_start_button:hover{
+            background-color: rgb(51, 218, 0);
+            color: black;
+        }
+        #score_textt{
+            font-size: 20pt;
+            margin-left: 30px;
+            background-color: white;
+            border: 3px solid black;
+            border-radius: 10px;
+            width: 200px;
+            height: 40px;
+        }
+        #fish_catch{
+            position: absolute;
+            top: 65px;
+            left: 1030px;
+            border: 3px solid black;
+            width: 300px;
+            height: 175px;
+            border-radius: 20px;
+            background-color: aliceblue;
+            padding: 10px;
+            
+
+        }
+        #fish_listbook{
+            position: absolute;
+            top: 285px;
+            left: 1030px;
+            border: 3px solid black;
+            width: 800px;
+            height: 435px;
+            border-radius: 20px;
+            background-color: aliceblue;
+            padding: 10px;
+        }
+        #button_area{
+            position: absolute;
+            top: 65px;
+            left: 1380px;
+            border: 3px solid black;
+            width: 300px;
+            height: 170px;
+            border-radius: 20px;
+            background-color: aliceblue;
+            padding: 10px;
+        }
+        .every_button{
+            width: 80px;
+            height: 40px;
+            margin: 7px;
+        }
+        #sound_by{
+            position: absolute;
+            top: 820px;
+            left: 430px;
+        }
+        #logo_text{
+            position: absolute;
+            top: 5px;
+            left: 430px;
+            font-size: 24pt;
+            background-color: white;
+            padding: 5px;
+            border: 3px solid black;
+        }
+        #text_1{
+            color: green;
+        }
+        #text_2{
+            color: orange;
+        }
+        #text_3{
+            color: rgb(44, 128, 255);
+        }
+    </style>
+
+</head>
+
+
+
+<body>
+    <!-- UI및 게임배경 관련 -->
+    <section>
+        <article class="sky">
+            <img src="images/sun.png" class="sun" alt="sun">
+            <img src="images/moon.png" class="moon" alt="moon">
+            <img src="images/cloud1.png" class="cloud1 cloud" alt="cloud">
+            <img src="images/cloud2.png" class="cloud2 cloud" alt="cloud">
+        </article>
+        <div class="stars">
+
+        </div>
+
+        <div class="flex-container" style="float: left; margin-bottom: 13px;">
+            <p id="score_textt">score: <span id="score_text">0</span></p>
+            <p id="logo_text"><span id="text_1">힐</span><span id="text_2">링</span> <span id="text_3">낚시</span>게임</p>
+            <p id="gametime_now_slow" class="flex----item">시간</p>
+        </div>
+    
+        <canvas id="myCanvas" width="1000" height="600" style="border: 1px solid;" style="float: left;"></canvas>
+    
+        <div class="flex-container space-between" style="float: left; margin-top: 13px;">
+            
+            <input type="button" value="낚시 시작 / 중지" id="fishcatch_start_button" onclick="allGameStart()">
+            <audio autoplay loop controls>
+                <source src="./sound/Calm Village.wav" type="audio/wav"/>
+            </audio>
+            <input type="image" src="./images/fishing club.png"/ width="80px">
+        </div>
+        <p id="sound_by">음원 저작자 : Smilegate RPG - Calm Village</p>
+        <div id="fish_catch">
+            <h2><잡은물고기 정보></h2>
+            <div id="fish_catch_info">
+                아직 물고기를 잡지 못했어요..
+            </div>
+            
+        </div>
+        <div id="fish_listbook">
+            <h2><물고기 도감></h2>
+            <div id="fish_input"></div>
+        </div>
+    </section>
+    <div id="button_area">
+        <h2><저장,로드,테스트용 기능들></h2>
+        <input type="button" class="every_button" value="저장하기" onclick="gameSave()"/>
+        <input type="button" class="every_button" value="불러오기" onclick="gameLoad()"/>
+        <br>
+        <input type="button" class="every_button" value="아침" onclick="morning()"/>
+        <input type="button" class="every_button" value="점심" onclick="lunch()"/>
+        <input type="button" class="every_button" value="저녁" onclick="dinner()"/>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+//변수모음    
+    //(변수) 게임시간 : 장민관
+        //게임시간을 다른기능에서 사용하기 위한 전역변수
+        //게임 일
+        var game_day = 0;
+        //게임 시
+        var game_hour = 6;
+        //게임 분
+        var game_min = 30;
+        //1초에 2분씩 증가하는 게임 분
+        var game_min_slow = 0;
+
+    //(변수) 확률구현 : 장민관
+        //물고기 잡기/확률
+        var fish_catch = 0;
+        var fish_catch_rand_num = 0;
+        //해당 변수 이상일경우 catch
+        var percent = 90;
+        //물고기 catch 확률 돌리기
+        var catch_start1, catch_start2;
+        //테스트용
+        var test1, test2;
+
+
+    //(변수) 미니게임 : 장민관
+        //이미지 시작 타이밍 변수
+        var timerImgStart = false;
+        var keyStart = false;
+        var resultImgStatus = false;
+        //html 에 score refresh
+        var scoreText = document.getElementById("score_text");
+        //점수
+        var score = 0;
+        //인터벌 제어변수
+        var fishCatchInterval;
+        var gamePlayInterval;
+        var timerInterval;
+        //물고기가 잡히면
+        var fishCatchStart = 0;
+        //게임 시작신호
+        var miniGameStart = 0;
+        //캔버스 받아오기
+        var canvas = document.getElementById('myCanvas');
+        //그리기 도구
+        var ctx = myCanvas.getContext("2d");
+        //필요 키 배열
+        var keySet = ["space", "up", "down", "left", "right"];
+        //키 이미지 배열화
+        var keyImg = new Array();
+        for (var i = 1; i < 5; i++) {
+            keyImg[i] = new Image();
+            keyImg[i].src = "./images/minigame/key_" + keySet[i] + ".png";
+        }
+        //키Y 이미지 배열화
+        var keyImgY = new Array();
+        for (var i = 1; i < 5; i++) {
+            keyImgY[i] = new Image();
+            keyImgY[i].src = "./images/minigame/key_" + keySet[i] + "_Y.png";
+        }
+        //타이머이미지 배열화
+        var timerImg = new Array();
+        for (var i = 0; i < 11; i++) {
+            timerImg[i] = new Image();
+            timerImg[i].src = "./images/minigame/time_" + i + ".png";
+        }
+        //스페이스 키 이미지
+        var spaceImg = new Array();
+        for (var i = 0; i < 2; i++) {
+            spaceImg[i] = new Image();
+            spaceImg[i].src = "./images/minigame/img_space_" + i + ".png";
+        }
+        //성공 및 실패, Catch이미지
+        var successImg = new Image();
+        successImg.src = "./images/minigame/img_success.png";
+
+        var failedImg = new Image();
+        failedImg.src = "./images/minigame/img_fail.png";
+
+        var catchImg = new Image();
+        catchImg.src = "./images/minigame/img_catch.png";
+
+        //사용자가 입력해야될 키
+        var arrayCount = [0, 0, 0, 0, 0, 0];
+        //사용자가 입력해야될 키(백업)
+        var arrayCountBackUp = [0, 0, 0, 0, 0, 0];
+        //맞게 입력되는지 체크
+        var arrayCountCheck = [0, 0, 0, 0, 0, 0];
+        var arrayCountCheckBackup = [0, 0, 0, 0, 0, 0];
+        //사용자가 입력한 키
+        var arrayCountInput = [0, 0, 0, 0, 0, 0];
+        //사용자가 입력해야될 키의 수
+        var keyNeedCount = 0;//초기화 필요
+        //사용자가 입력한 키의 수
+        var keyCountStatus = 0;//초기화 필요
+        //키의 입력이 잘못되었을 때의 처리를 위한 변수
+        var keyWrongCheck = false;
+        //미니게임 성공체크
+        var gameSucessCheck = false;
+        //var keyListen = 0;
+        //타이머 시간조절
+        var timer = 11;//timer + 1
+
+        //키 이미지 위치 설정 [kind][x,y]
+        var keyImgPosition = [[350, 500], [410, 500], [470, 500], [530, 500], [590, 500], [650, 500]];
+        var spaceImgPosition = [380, 500, 200, 50];//x,y,width,height
+        var successImgPosit = [350, 500, 300, 75];//x,y,width,height
+        var failedImgPosit = [350, 500, 200, 75];
+        var catchImgPosit = [400, 280, 150, 50];
+        //타이머 이미지 위치 설정
+        var timerImgPosition = [330, 430];
+
+    //(변수) 게임배경변화 : 조현서
+        let bgcolor = ["#b1e2e2", "#636888", "#b08fcc"];
+
+    //(변수) 물의흐름표현 : 박지원
+        //이미지 선언, 애니메이션에 활용할 이미지들을 배열에 넣어줌
+        var imageArray = [ "images/파도0.png","images/파도1.png", "images/파도2.png"]; 
+        var imageIndex = 0;
+        var sea_x = 0;  
+        var sea_y = 0; 
+        var SeaImg = new Image();
+        SeaImg.src= imageArray[imageIndex];
+
+    //(변수) 낚시꾼 : 박지원
+        //낚시꾼 동작
+        //2차원배열 생성하기
+        var anglerImgF = new Array();
+        var anglerImgU = new Array();
+        var anglerImgH = new Array();
+        var anglerImgA = new Array();
+        var imgTime = 0;
+        //anglerImg[0] == 낚시상태
+        for(var i = 0 ; i < 4 ; i++){
+            anglerImgF[i] = new Image();
+            anglerImgF[i].src = "./images/angler/f"+i+".png";
+        }
+        //anglerImg[1] == 낚아올릴때
+        for(var i = 1 ; i < 5 ; i++){
+            anglerImgU[i] = new Image();
+            anglerImgU[i].src = "./images/angler/u"+i+".png";
+        }
+        //anglerImg[2] == 낚았을때
+        for(var i = 0 ; i < 5 ; i++){
+            anglerImgH[i] = new Image();
+            anglerImgH[i].src = "./images/angler/h"+i+".png";
+        }
+        //anglerImg[3] == 놓쳤을때
+        for(var i = 0 ; i < 4 ; i++){
+            anglerImgA[i] = new Image();
+            anglerImgA[i].src = "./images/angler/a"+i+".png";
+            
+        }
+        //낚시꾼 동작변수 생성
+        var anglerStatus = 0;
+        var anglerPosition = [430,360,170,96];
+
+        var anglerImgFI = 0;
+        var anglerImgUI = 1;
+        var anglerImgHI = 0;
+        var anglerImgAI = 0;
+    //(변수)도감 : 서지우
+        var catched = new Array(); //[0]물고기 종류
+        var fishList = ["가자미","고등어","곱사연어","꼬치고기","농어","대구","도미","명태","볼락","연어","참다랑어"];
+        var fishCheckList = [0,0,0,0,0,0,0,0,0,0,0];
+        var fishInput = document.getElementById("fish_input");
+        var fishCatchInfo = document.getElementById("fish_catch_info");
+        var fishTemp = "";
+        function fishListFill(){
+            for(var i = 0; i<11; i++){
+                if(fishCheckList[i] == 1){
+                    fishTemp = fishTemp + '<input class="fish" type="image" src="./images/fishlist/fish_'+fishList[i]+'.png"/>';
+                }else{
+                    fishTemp = fishTemp + '<input class="fish" type="image" src="./images/fishlist/fish_'+fishList[i]+'_n.png"/>';
+                }
+            }
+        }
+        fishListFill();
+        fishInput.innerHTML = fishTemp;
+        fishTemp = "";
+
+
+//함수모음
+    //(함수) 낚시 시작/중지 : 장민관
+        var gamenum = false;
+        function allGameStart(){
+            if(gamenum == false){
+                fish_catch_start();
+                anglerStatus = 1;
+                gamenum = true;
+            }else{
+                fish_catch_stop();
+                anglerStatus = 0;
+                gamenum = false;
+                clearInterval(fishCatchInterval);
+                imgTime = 0;
+                resultImgStatus = false;
+                keyStart = false;
+                
+            }
+
+        }
+    //(함수) 게임시간 : 장민관
+        function make_gametime() {
+            //0.5초당 1분증가
+            game_min = game_min + 1
+            //60분이 되었을때 1시간 증가
+            if (game_min == 60) {
+                game_min = 0;
+                game_hour = game_hour + 1;
+            }
+            //24시간이 되었을때 1일 증가
+            if (game_hour == 24) {
+                game_hour = 0;
+                game_day = game_day + 1;
+            }
+            //게임시간 2분마다 업데이트 처리
+            if (game_min % 2 == 0) {
+                game_min_slow = game_min
+            }
+
+            //게임내부에 현재시간 표시
+            var timeShow = document.getElementById("gametime_now_slow");
+            timeShow.innerText = game_day + " Day " + game_hour + " 시 " + game_min_slow + " 분";
+            
+        }
+    //(인터벌) 게임시간 : 장민관
+        //0.5초마다 시간함수 실행
+        setInterval(make_gametime, 500);
+        
+    //(함수) 물고기 catch 확률 : 장민관
+        function fish_catch_random() {
+            fish_catch_rand_num = parseInt(Math.random() * 100);
+            //물고기 catch if처리
+            if (fish_catch_rand_num >= percent) {
+                fish_catch = 1;
+            }
+            
+            //물고기를 잡을경우/ 인터벌 중단
+            if (fish_catch == 1) {
+                fish_catch = 0;
+                fish_catch_rand_num = 0;
+                fishCatchInterval = setInterval(fishCatch, 1);
+                fish_catch_stop();
+            }
+        }
+        //(인터벌) 물고기잡기 확률 : 장민관
+        //물고기 잡기 시작
+        function fish_catch_start() {
+            catch_start = setInterval(fish_catch_random, 1000);
+            fishCatchStart = 1;
+        }
+        //물고기 잡기 중지
+        function fish_catch_stop() {
+            clearInterval(catch_start);
+            fishCatchStart = 1;
+        }
+
+    //아침,점심,저녁
+            function morning(){
+                game_hour = 7;
+            }
+            function lunch(){
+                game_hour = 12;
+            }
+            function dinner(){
+                game_hour = 0;
+            }
+    //(함수) 미니게임 : 장민관
+        //*키 입력 관련 함수모음
+        //키 입력 감지
+        function MyKeyDownHandler(MyEvent) {
+            //SPACE
+            if (MyEvent.keyCode == 32) {
+                clearInterval(fishCatchInterval);
+                if (fishCatchStart == 1) {
+                        gameStart();
+                }
+                clearInterval(fishCatchInterval);
+                //ctx.clearRect(300, 500, 200, 50);
+            }
+            //UP
+            if (MyEvent.keyCode == 38) {
+                arrayCountInput[keyCountStatus] = 1;
+                keyInputRightCheck();
+            }
+            //DOWN
+            if (MyEvent.keyCode == 40) {
+                arrayCountInput[keyCountStatus] = 2;
+                keyInputRightCheck();
+            }
+            //LEFT
+            if (MyEvent.keyCode == 37) {
+                arrayCountInput[keyCountStatus] = 3;
+                keyInputRightCheck();
+            }
+            //RIGHT
+            if (MyEvent.keyCode == 39) {
+                arrayCountInput[keyCountStatus] = 4;
+                keyInputRightCheck();
+            }
+        }
+        //맞게 입력되었는지 확인작업
+        function keyInputRightCheck() {
+            //맞으면
+            if (arrayCount[keyCountStatus] == arrayCountInput[keyCountStatus]) {
+                arrayCountCheck[keyCountStatus] = 0;
+                keyCountStatus = keyCountStatus + 1;
+                //전부 입력하면
+                if (keyNeedCount <= keyCountStatus) {
+                    if (arrayCountCheck)
+                        gameSucessCheck = comparedCount();
+                    if (gameSucessCheck == true) {
+                        anglerStatus = 2;
+                        gameFinish();
+                        gameSucess();
+                    }
+                }
+            } else {
+                //틀리면
+                keyCountStatus = 0;
+                arrayCountInput = [0, 0, 0, 0, 0, 0];
+                arrayCountCheck = arrayCountCheckBackup;
+            }
+
+        }
+        //다 완료했는지 체크
+        function comparedCount() {
+            var correct = 0;
+            var rightCount = [0, 0, 0, 0, 0, 0];
+            for (var i = 0; i < 6; i++) {
+                if (arrayCountCheck[i] == rightCount[i]) {
+                    correct = correct + 1;
+                }
+            }
+            if (correct == 6) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        //게임초기화 및 만들기
+        function makeMiniGame() {
+            
+            console.log(keyNeedCount);
+            console.log(arrayCount);
+        }
+
+
+        //1초 카운트
+        function timerCount() {
+            timerImgStart = true;
+            timer = timer - 1;
+            if (timer == 0) {
+                anglerStatus = 4;
+                gameFinish();
+            }
+        }
+        
+        //게임 시작
+        function gameStart() {
+            //초기화작업
+            arrayCount = [0, 0, 0, 0, 0, 0]
+            arrayCountBackUp = [0, 0, 0, 0, 0, 0];
+            arrayCountCheck = [0, 0, 0, 0, 0, 0];
+            arrayCountCheckBackup = [0, 0, 0, 0, 0, 0];
+            arrayCountInput = [0, 0, 0, 0, 0, 0];
+            keyNeedCount = 0;//초기화 필요
+            keyCountStatus = 0;//초기화 필요
+            keyWrongCheck = false;
+            gameSucessCheck = false;
+            timer = 11;
+            //눌러야 되는 키의 수(랜덤)
+            keyNeedCount = Math.floor(Math.random() * 3) + 4;//4,5,6
+            //입력해야되는 키 설정(랜덤)
+            for (var i = 0; i < keyNeedCount; i++) {
+                arrayCount[i] = Math.floor(Math.random() * 4) + 1//1,2,3,4
+                arrayCountCheck[i] = 1;
+            }
+            keyStart = true;
+            arrayCountBackUp = arrayCountCheck;
+            gamePlayInterval = setInterval(miniGameInterval, 10);
+            timerInterval = setInterval(timerCount, 1000);
+            timerImgRefreshInterval = setInterval(timerImgRefresh, 10);
+
+        }
+        //게임 종료시
+        function gameFinish() {
+            
+            clearInterval(gamePlayInterval);
+            clearInterval(timerInterval);
+            clearInterval(timerImgRefreshInterval);
+            //ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //setTimeout(gameResult, 300);
+            fishCatchStart = 0;
+            miniGameStart = 0;
+            keyStart = false;
+            timerImgStart = false;
+        }
+        //게임 성공시 작동
+        function gameSucess() {
+            score = score + 10;
+            scoreText.innerText = score;
+            fishRandom();
+            
+        }
+        
+        fishCatchI = 0;
+        function fishCatch() {
+            // if (fishCatchI == 0) {
+                 fishCatchI = 1;
+            // } else {
+            //     fishCatchI = 0;
+            // }
+            ctx.drawImage(catchImg, catchImgPosit[0], catchImgPosit[1], catchImgPosit[2], catchImgPosit[3]);
+            ctx.drawImage(spaceImg[fishCatchI], spaceImgPosition[0], spaceImgPosition[1], spaceImgPosition[2], spaceImgPosition[3]);
+        }
+        addEventListener("keydown", MyKeyDownHandler);
+        
+        var yyy = 0;
+        //쓰지 않는 함수
+            function miniGameInterval() {
+                
+                //ctx.clearRect(400, 500, 750, 550);
+                
+            }//miniGameInterval
+    //게임저장기능 : 장민관
+        function gameSave(){
+            var check = confirm("게임을 저장할까요?");
+            if(check){
+                localStorage.setItem("gameOnCheck",1);
+                localStorage.setItem("gameScore",score);
+                localStorage.setItem("gameDay",game_day);
+                localStorage.setItem("gameHour",game_hour);
+                localStorage.setItem("fishStatus",JSON.stringify(fishCheckList));
+            }
+            
+        }
+        function gameLoad(){
+            var check = confirm("게임을 불러올까요?");
+            if(check){
+                if(Number(localStorage.getItem('gameOnCheck')) == 1){
+                    score = Number(localStorage.getItem("gameScore"));
+                    game_day = Number(localStorage.getItem("gameDay"));
+                    game_hour = Number(localStorage.getItem("gameHour"));
+                    fishCheckList = JSON.parse(localStorage.getItem("fishStatus"));
+                    fishListFill();
+                    fishInput.innerHTML = fishTemp;
+                    fishTemp = "";
+                    scoreText.innerText = score;
+                }else{
+                    alert("게임 정보가 없습니다.")
+                }
+            
+            }
+        }
+
+
+//(함수) 변화되는 게임배경 : 조현서
+        $(document).ready(function () {
+            var stars = 800;
+            var $stars = $(".stars");
+            var r = 800;
+            for (var i = 0; i < stars; i++) {
+                var $star = $("<div/>").addClass("star");
+                $stars.append($star);
+            }
+            $(".star").each(function () {
+                var cur = $(this);
+                var s = 0.2 + (Math.random() * 1);
+                var curR = r + (Math.random() * 300);
+                cur.css({
+                    transformOrigin: "0 0 " + curR + "px",
+                    transform: " translate3d(0,0,-" + curR + "px) rotateY(" + (Math.random() * 360) + "deg) rotateX(" + (Math.random() * -50) + "deg) scale(" + s + "," + s + ")"
+
+                })
+            })
+        })
+        setTimeout("fade_in()", 360000);
+        setTimeout("fade_in()", 700000);
+
+        function fade_in() {
+            var stars = document.querySelector(".stars");
+            stars.style.opacity = "1";
+        }
+        function fade_out() {
+            var stars = document.querySelector(".stars");
+            stars.style.opacity = "0";
+        }
+
+
+
+    //도감관련 : 서지우
+    function fishRandom(){
+        var grade = ["a","b","c","d","e","f"];
+        var fishKindRandom = Math.floor(Math.random()*11);
+        var fishGradeRandom = grade[Math.floor(Math.floor(Math.random()*6))];
+        var fishLengthRandom = Math.floor((Math.random()*101)+50);
+        var fishSize;
+        if(fishLengthRandom>130){fishSize = "XL"}
+        else if(fishLengthRandom>100){fishSize = "L"}
+        else if(fishLengthRandom>80){fishSize = "M"}
+        else if(fishLengthRandom>60){fishSize = "S"}
+        else{fishSize = "SS"}
+        fishCheckList[fishKindRandom] = 1;
+        fishListFill();
+        fishInput.innerHTML = fishTemp;
+        fishTemp = "";
+        fishCatchInfo.innerHTML = '<input type="image" src="./images/fishlist/fish_'+fishList[fishKindRandom]+'.png"/>'+
+                                '<p>종류: '+ fishList[fishKindRandom] + ' 등급: ' + fishGradeRandom +
+                                '<br>사이즈: ' +fishSize + ' 길이: ' + fishLengthRandom + '<p>';
+    }
+//이미지 관련 함수 모음
+    //(이미지 관련 함수) 미니게임 : 장민관
+        function timerImgRefresh() {
+            timerPosit(timerImg[timer]);
+        }
+        //키 이미지 생성 함수
+        function KeyPosit(keyImgKind, keyPosi, keyY) {
+            if (keyY == 1) {
+                ctx.drawImage(keyImgKind, keyPosi[0], keyPosi[1], 50, 50);
+            } else {
+                ctx.drawImage(keyImgKind, keyPosi[0], keyPosi[1], 50, 50);
+            }
+        }
+        //timer 이미지 생성 함수
+        var timeInfo;
+        function timerPosit(timerImg) {
+            timeInfo = timerImg;
+            
+        }
+        //게임 결과
+        function gameResult() {
+            console.log(gameSucessCheck);
+            
+            //setTimeout(function () { ctx.clearRect(300, 500, 300, 75); }, 5000);
+        }
+
+    //(이미지 관련 함수) 물의흐름표현 : 박지원
+            function Do_a_Frame() {
+                ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+                
+            }
+            function changeImage() {    //임의의 함수명 changeImage라 설정
+                
+            }
+    //(이미지 관련 함수) 낚시꾼 : 박지원
+            var anglerImgI = 0;
+            function anglerImgSet(){
+                if(anglerStatus == 1){
+                    //낚시중
+                    ctx.drawImage(anglerImgF[anglerImgFI],anglerPosition[0],anglerPosition[1],anglerPosition[2],anglerPosition[3]);    
+                    anglerImgFI = anglerImgFI + 1;
+                    if(anglerImgFI > 3){anglerImgFI = 0;}
+                }else if(anglerStatus == 2){
+                    //낚아올리기
+                    ctx.drawImage(anglerImgU[anglerImgUI],anglerPosition[0],anglerPosition[1],anglerPosition[2],anglerPosition[3]);
+                    anglerImgUI = anglerImgUI + 1;
+                    if(anglerImgUI > 4){anglerImgUI = 1;}
+                    imgTime++;
+                    if(imgTime == 8){
+                        anglerStatus = 3;
+                        imgTime = 0;
+                    }
+                }else if(anglerStatus == 3){
+                    //행복
+                    ctx.drawImage(anglerImgH[anglerImgHI],anglerPosition[0],anglerPosition[1],anglerPosition[2],anglerPosition[3]);
+                    anglerImgHI = anglerImgHI + 1;
+                    if(anglerImgHI > 4){anglerImgHI = 0;}
+                    imgTime++;
+                    resultImgStatus = true;
+                    if(imgTime == 16){
+                        anglerStatus = 1;
+                        gamenum = false;
+                        allGameStart();
+                        imgTime = 0;
+                        resultImgStatus = false;
+                    }
+                }else if(anglerStatus == 4){
+                    //화남
+                    ctx.drawImage(anglerImgA[anglerImgAI],anglerPosition[0],anglerPosition[1],anglerPosition[2],anglerPosition[3]);
+                    anglerImgAI = anglerImgAI + 1;
+                    if(anglerImgAI > 3){anglerImgAI = 0;}
+                    imgTime++
+                    resultImgStatus = true;
+                    if(imgTime == 18){
+                        anglerStatus = 1;
+                        gamenum = false;
+                        allGameStart();
+                        imgTime = 0;
+                        resultImgStatus = false;
+                    }
+                }else{
+                    //평상시
+                    ctx.drawImage(anglerImgA[0],anglerPosition[0],anglerPosition[1],anglerPosition[2],anglerPosition[3]);
+                }
+            }
+//새로고침이 필요한 이미지 모음
+            function ImageRefresh(){
+                ctx.clearRect(0,0,myCanvas.width, myCanvas.height);
+                //(이미지 관련 함수) 변화되는 배경 : 조현서
+                if (game_hour < 7) {
+                    ctx.fillStyle = bgcolor[1];
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                } else if (game_hour >= 7) {
+                    ctx.fillStyle = bgcolor[2];
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                } else if (game_hour >= 12) {
+                    ctx.fillStyle = bgcolor[0];
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                } else if (game_hour >= 18) {
+                    ctx.fillStyle = bgcolor[1];
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+
+                //(이미지 관련 함수) 물의 흐름표현 : 박지원
+                //물 이미지 가져오기
+                ctx.drawImage(SeaImg, sea_x, sea_y, 1000, 600); //위치와 크기 조정 필요
+                SeaImg.src= imageArray[imageIndex]; //이미지 주소 -> 배열에서 불러오기
+                imageIndex++;   //인덱스 숫자 증가 -> 차례로 나타내기
+                if (imageIndex >= imageArray.length) {  //이미지 인덱스가 배열 크기보다 커지면 인덱스를 0으로 초기화한다 -> 애니메이션 반복
+                    imageIndex = 0;
+                }
+                //(이미지 관련 함수) 낚시꾼 : 박지원
+                anglerImgSet();
+            //미니게임 : 장민관
+                //미니게임 결과 출력 : 장민관
+                if(resultImgStatus == true){
+                    if (gameSucessCheck == true) {
+                        ctx.drawImage(successImg, successImgPosit[0], successImgPosit[1], successImgPosit[2], successImgPosit[3]);
+                    } else {
+                        ctx.drawImage(failedImg, failedImgPosit[0], failedImgPosit[1], failedImgPosit[2], failedImgPosit[3]);
+                    }
+                }
+                //미니게임 키 출력 : 장민관
+                if(keyStart == true){
+                    for (var j = 0; j < keyNeedCount; j++) {
+                        switch (arrayCount[j]) {
+                            case 1:
+                                //if문 true시 Y이미지 출력
+                                if (arrayCount[j] == arrayCountInput[j]) {
+                                    KeyPosit(keyImgY[1], keyImgPosition[j]);
+                                } else {
+                                    KeyPosit(keyImg[1], keyImgPosition[j]);
+                                }
+                                break;
+                            case 2:
+                                if (arrayCount[j] == arrayCountInput[j]) {
+                                    KeyPosit(keyImgY[2], keyImgPosition[j]);
+                                } else {
+                                    KeyPosit(keyImg[2], keyImgPosition[j]);
+                                }
+                                break;
+                            case 3:
+                                if (arrayCount[j] == arrayCountInput[j]) {
+                                    KeyPosit(keyImgY[3], keyImgPosition[j]);
+                                } else {
+                                    KeyPosit(keyImg[3], keyImgPosition[j]);
+                                }
+                                break;
+                            case 4:
+                                if (arrayCount[j] == arrayCountInput[j]) {
+                                    KeyPosit(keyImgY[4], keyImgPosition[j]);
+                                } else {
+                                    KeyPosit(keyImg[4], keyImgPosition[j]);
+                                }
+                                break;
+                            default: break;
+                        }
+                    }
+                }
+                if(timerImgStart == true){
+                    
+                    ctx.drawImage(timeInfo, timerImgPosition[0], timerImgPosition[1], 50, 50);
+                }
+            }
+            setInterval(ImageRefresh,400);
+
+    </script>
+</body>
+
+</html>
